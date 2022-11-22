@@ -1,0 +1,15 @@
+# Visual Studio / MSBuild
+*.sln
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filter
+
+# Visual Studio Code
+.vscode/
+
+# Other Stuff
+debug.lua
+.clang-format
+bin/
+bin-int/
+Test/
