@@ -1,6 +1,7 @@
 #pragma once
-#include <enet/enet.h>
 #include <GenesisNet/NetAddress.hpp>
+#include <GenesisNet/Packet.hpp>
+#include <enet/enet.h>
 
 namespace genesis {
 	class NetClient {
@@ -10,6 +11,7 @@ namespace genesis {
 		bool bind(uint32_t channels = 1);
 		bool connect(const NetAddress& address);
 		void update();
+		void send(const Packet& p);
 		void disconnect();
 		void unbind();
 
@@ -19,7 +21,7 @@ namespace genesis {
 
 	private:
 		bool bound, connected;
-		
+
 		ENetAddress serverAddress;
 		ENetHost* client;
 		ENetPeer* peer;

@@ -20,15 +20,12 @@ namespace genesis {
 		return true;
 	}
 	bool NetClient::connect(const NetAddress& address) {
-		enet_address_set_host_ip(&serverAddress, "127.0.0.1");
-		serverAddress.port = address.getPort();
+		serverAddress = address.getHandle();
 
 		peer = enet_host_connect(client, &serverAddress, channels, 0);
 		if(peer == NULL) {
 			return false;
 		}
-
-		std::cout << serverAddress.port << std::endl;
 
 		ENetEvent e;
 		if(enet_host_service(client, &e, 5000) > 0 && e.type == ENET_EVENT_TYPE_CONNECT) {
@@ -39,7 +36,14 @@ namespace genesis {
 			return false;
 		}
 	}
+	void NetClient::send(const Packet& p) {
+		ENetPacket* packet = enet_packet_create(p.getData(), p.getSize(), ENET_PACKET_FLAG_RELIABLE);
+		enet_peer_send(peer, 1, packet);
+	}
 	void NetClient::update() {
+		ENetEvent e;
+		while(enet_host_service(client, &e, 0) > 0) {
+		}
 	}
 	void NetClient::disconnect() {
 	}

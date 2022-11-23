@@ -1,5 +1,6 @@
 #include <GenesisNet/NetServer.hpp>
 #include <cstdio>
+#include <iostream>
 
 namespace genesis {
 	NetServer::NetServer(): bound(false) {
@@ -7,7 +8,7 @@ namespace genesis {
 
 	bool NetServer::bind(uint16_t port, uint32_t slots, uint32_t channels) {
 		if(bound) return false;
-		
+
 		address.host = ENET_HOST_ANY;
 		address.port = port;
 
@@ -26,18 +27,19 @@ namespace genesis {
 		while(enet_host_service(server, &e, 0) > 0) {
 			switch(e.type) {
 				case ENET_EVENT_TYPE_CONNECT: {
-					printf("Connection received!");
+					std::cout << "Connection Received!" << std::endl;
 					break;
 				}
 				case ENET_EVENT_TYPE_DISCONNECT: {
+					std::cout << "Disconnection Received!" << std::endl;
 					break;
 				}
 				case ENET_EVENT_TYPE_RECEIVE: {
 					printf("A packet of length %u containing %s was received from %s on channel %u.\n",
-						e.packet -> dataLength,
-						e.packet -> data,
-						e.peer -> data,
-						e.channelID);
+					       e.packet->dataLength,
+					       e.packet->data,
+					       e.peer->data,
+					       e.channelID);
 					break;
 				}
 			}

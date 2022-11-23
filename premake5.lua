@@ -1,3 +1,5 @@
+include "ThirdParty/enet/premake5.lua"
+
 project "GenesisNet"
 	kind "StaticLib"
 	systemversion "latest"

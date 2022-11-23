@@ -1,6 +1,7 @@
 #pragma once
-#include <enet/enet.h>
 #include <cstdint>
+#include <enet/enet.h>
+
 
 namespace genesis {
 	class NetServer {
@@ -10,6 +11,8 @@ namespace genesis {
 		bool bind(uint16_t port, uint32_t slots, uint32_t channels = 1);
 		void update();
 		void unbind();
+
+		uint16_t getPort() const { return address.port; }
 
 	private:
 		bool bound;

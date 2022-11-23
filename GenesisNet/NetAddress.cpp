@@ -2,16 +2,16 @@
 
 namespace genesis {
 	NetAddress::NetAddress(const std::string& s) {
-		if(s.find(":") != std::string::npos) {
-			address = s.substr(0, s.find(':'));
-			port = std::stoi(s.substr(s.find(':') + 1));
+		auto pos = s.find(":");
+		if(pos != std::string::npos) {
+			enet_address_set_host(&handle, s.substr(0, pos).c_str());
+			handle.port = static_cast<uint16_t>(std::stoi(s.substr(pos + 1)));
 		} else {
-			address = s;
-			port = 0;
+			enet_address_set_host(&handle, s.substr(0, pos).c_str());
 		}
 	}
 	NetAddress::NetAddress(const std::string& address, uint16_t port) {
-		this->address = address;
-		this->port = port;
+		enet_address_set_host(&handle, address.c_str());
+		handle.port = port;
 	}
 }
