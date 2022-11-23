@@ -23,10 +23,6 @@ project "GenesisNet"
 		"%{wks.location}/include/"
 	}
 
-	links {
-		"GenesisNet"
-	}
-
 	filter "configurations:Debug*"
 		symbols "On"
 		optimize "Off"
