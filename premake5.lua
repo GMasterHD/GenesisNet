@@ -20,7 +20,8 @@ project "GenesisNet"
 	}
 
 	includedirs {
-		"%{wks.location}/include/"
+		"%{wks.location}/include/",
+		"%{wks.location}/ThirdParty/enet/include/"
 	}
 
 	filter "configurations:Debug*"
