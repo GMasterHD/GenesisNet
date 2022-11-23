@@ -1,0 +1,3 @@
+[submodule "ThirdParty/enet"]
+	path = ThirdParty/enet
+	url = https://github.com/GMasterHD/enet
