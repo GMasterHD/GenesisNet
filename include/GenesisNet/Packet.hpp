@@ -7,7 +7,12 @@
 namespace genesis {
 	class Packet {
 	public:
-		Packet();
+		/**
+		 * @brief Construct a new Packet object
+		 * 
+		 * @param packetTypeID the id can be used to register a listener onto this packet type
+		 */
+		Packet(uint32_t packetTypeID = 0);
 
 		explicit operator bool() const;
 
@@ -64,7 +69,9 @@ namespace genesis {
 		 */
 		bool checkSize(size_t size);
 
-		virtual const void* onSend(size_t& size);
+		uint32_t getPacketTypeID() const { return packetID; }
+
+		virtual const void* onSend(size_t& size) const;
 		virtual void onReceive(const void* data, size_t size);
 	private:
 		/**
@@ -74,8 +81,8 @@ namespace genesis {
 		 */
 		void append(const void* data, size_t bytes);
 
-		size_t readPos;
-		size_t sendPos;
+		size_t readPos, sendPos;
+		uint32_t packetID;
 		bool valid;
 		std::vector<char> data;
 	};

@@ -1,4 +1,5 @@
 #include <GenesisNet/NetServer.hpp>
+#include <GenesisNet/Packet.hpp>
 #include <cstdio>
 #include <iostream>
 
@@ -40,10 +41,24 @@ namespace genesis {
 					       e.packet->data,
 					       e.peer->data,
 					       e.channelID);
+					
+					Packet packet;
+					packet.onReceive(e.packet->data, e.packet->dataLength);
+					std::string s;
+					packet >> s;
+					std::cout << "S: " << s << std::endl;
+					
 					break;
 				}
 			}
 		}
+	}
+
+	void NetServer::on(uint32_t packetID, NetServer::PacketReceiveFunction f) {
+		if(listeners.find(packetID) == listeners.end()) {
+			listeners.insert(std::pair(packetID, std::vector<NetServer::PacketReceiveFunction>()));
+		}
+		listeners[packetID].push_back(f);
 	}
 
 	void NetServer::unbind() {

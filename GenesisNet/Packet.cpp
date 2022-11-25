@@ -2,7 +2,7 @@
 #include <WinSock2.h>
 
 namespace genesis {
-	Packet::Packet(): readPos(0), sendPos(0), valid(true) {
+	Packet::Packet(uint32_t packetTypeID): readPos(0), sendPos(0), valid(true), packetID(packetTypeID) {
 	}
 
 	bool Packet::isEnd() const {
@@ -203,7 +203,7 @@ namespace genesis {
 		}
 	}
 
-	const void* Packet::onSend(size_t& size) {
+	const void* Packet::onSend(size_t& size) const {
 		size = getSize();
 		return getData();
 	}

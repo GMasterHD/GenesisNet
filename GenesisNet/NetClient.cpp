@@ -37,8 +37,10 @@ namespace genesis {
 		}
 	}
 	void NetClient::send(const Packet& p) {
-		ENetPacket* packet = enet_packet_create(p.getData(), p.getSize(), ENET_PACKET_FLAG_RELIABLE);
-		enet_peer_send(peer, 1, packet);
+		size_t size;
+		auto data = p.onSend(size);
+		ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_RELIABLE);
+		enet_peer_send(peer, 0, packet);
 	}
 	void NetClient::update() {
 		ENetEvent e;
